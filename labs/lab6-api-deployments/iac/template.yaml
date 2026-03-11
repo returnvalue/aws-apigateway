@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  ApiDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties: {RestApiId: !Ref RestApi, Description: Initial Development Deployment}
+  DevStage:
+    Type: 'AWS::ApiGateway::Stage'
+    Properties: {RestApiId: !Ref RestApi, DeploymentId: !Ref ApiDeployment, StageName: dev}

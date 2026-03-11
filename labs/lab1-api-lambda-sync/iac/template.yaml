@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  LambdaFunctionArn: {Type: String}
+Resources:
+  RestApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties: {Name: EnterpriseAPI}
+  SyncResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !GetAtt RestApi.RootResourceId
+      PathPart: sync
+  GetMethod:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref SyncResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunctionArn}/invocations'

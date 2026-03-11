@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  QueryStringValidator:
+    Type: 'AWS::ApiGateway::RequestValidator'
+    Properties:
+      Name: RequireQueryString
+      RestApiId: !Ref RestApiId
+      ValidateRequestParameters: true

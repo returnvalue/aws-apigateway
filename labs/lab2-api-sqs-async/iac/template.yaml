@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  IngestionQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties: {QueueName: IngestionQueue}
+  ApiGatewayRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement: [{Effect: Allow, Principal: {Service: apigateway.amazonaws.com}, Action: sts:AssumeRole}]
+      Policies:
+        - PolicyName: SQSAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement: [{Effect: Allow, Action: 'sqs:SendMessage', Resource: !GetAtt IngestionQueue.Arn}]

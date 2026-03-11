@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  PremiumApiKey:
+    Type: 'AWS::ApiGateway::ApiKey'
+    Properties: {Name: PremiumClientKey, Enabled: true}
+  PremiumUsagePlan:
+    Type: 'AWS::ApiGateway::UsagePlan'
+    Properties:
+      UsagePlanName: PremiumTierPlan
+      ApiStages: [{ApiId: !Ref RestApi, Stage: prod}]
+      Quota: {Limit: 1000, Period: MONTH}
+      Throttle: {BurstLimit: 10, RateLimit: 5}
+  UsagePlanKey:
+    Type: 'AWS::ApiGateway::UsagePlanKey'
+    Properties: {KeyId: !Ref PremiumApiKey, KeyType: API_KEY, UsagePlanId: !Ref PremiumUsagePlan}
