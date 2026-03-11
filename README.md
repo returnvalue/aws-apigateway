@@ -10,6 +10,7 @@ Based on AWS best practices (SAA-C03), these labs cover:
 * **Synchronous REST APIs:** Connecting HTTP endpoints to Lambda functions via Proxy Integrations.
 * **Asynchronous Processing:** Implementing the Storage-First pattern using direct SQS integrations.
 * **Fan-Out Webhooks:** Integrating directly with SNS to broadcast messages to multiple subscribers.
+* **Event Routing:** Directly ingesting webhooks onto an EventBridge Custom Bus.
 * **API Security:** (Upcoming) Implementing API Keys and Usage Plans for throttling.
 * **Request Validation:** (Upcoming) Enforcing schema validation at the edge.
 * **Deployment Management:** (Upcoming) Managing Stages and Snapshots for CI/CD.
@@ -41,3 +42,4 @@ Based on AWS best practices (SAA-C03), these labs cover:
 1. [Lab 1: Foundational API & Synchronous Lambda](./labs/lab1-api-lambda-sync/README.md)
 2. [Lab 2: Storage-First Pattern (Direct SQS Integration)](./labs/lab2-api-sqs-async/README.md)
 3. [Lab 3: Fan-Out Webhooks (Direct SNS Integration)](./labs/lab3-api-sns-fanout/README.md)
+4. [Lab 4: Event Routing (Direct EventBridge Integration)](./labs/lab4-api-eventbridge/README.md)
