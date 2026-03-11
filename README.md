@@ -12,8 +12,8 @@ Based on AWS best practices (SAA-C03), these labs cover:
 * **Fan-Out Webhooks:** Integrating directly with SNS to broadcast messages to multiple subscribers.
 * **Event Routing:** Directly ingesting webhooks onto an EventBridge Custom Bus.
 * **Request Validation:** Enforcing parameter and schema validation at the edge to reduce backend load.
-* **Deployment Management:** managing immutable snapshots and Stages (dev/prod) for CI/CD.
-* **API Security:** (Upcoming) Implementing API Keys and Usage Plans for throttling.
+* **Deployment Management:** Managing immutable snapshots and Stages (dev/prod) for CI/CD.
+* **API Security:** Implementing API Keys and Usage Plans for throttling and monetization.
 
 ## ⚙️ Prerequisites
 
@@ -36,12 +36,13 @@ Based on AWS best practices (SAA-C03), these labs cover:
 > [!IMPORTANT]
 > **Cumulative Architecture:** These labs are designed as a cumulative scenario. You are building an evolving API infrastructure.
 >
-> **Session Persistence:** These labs rely on bash variables (like `$API_ID`, `$LAMBDA_ARN`, `$VALIDATOR_ID`, etc.). Run all commands in the same terminal session to maintain context.
+> **Session Persistence:** These labs rely on bash variables (like `$API_ID`, `$LAMBDA_ARN`, `$VALIDATOR_ID`, `$PLAN_ID`, etc.). Run all commands in the same terminal session to maintain context.
 
 ## 📚 Labs Index
 1. [Lab 1: Foundational API & Synchronous Lambda](./labs/lab1-api-lambda-sync/README.md)
 2. [Lab 2: Storage-First Pattern (Direct SQS Integration)](./labs/lab2-api-sqs-async/README.md)
 3. [Lab 3: Fan-Out Webhooks (Direct SNS Integration)](./labs/lab3-api-sns-fanout/README.md)
 4. [Lab 4: Event Routing (Direct EventBridge Integration)](./labs/lab4-api-eventbridge/README.md)
-5. [Lab 5: Payload Edge Validation](./labs/lab5-api-validation/README.md)
+5. [Lab 1: Payload Edge Validation](./labs/lab5-api-validation/README.md)
 6. [Lab 6: API Deployments & Stages](./labs/lab6-api-deployments/README.md)
+7. [Lab 7: Monetization & Security (API Keys & Throttling)](./labs/lab7-api-keys-throttling/README.md)
