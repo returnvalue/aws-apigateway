@@ -9,6 +9,7 @@ This repository contains hands-on labs demonstrating core Amazon API Gateway con
 Based on AWS best practices (SAA-C03), these labs cover:
 * **Synchronous REST APIs:** Connecting HTTP endpoints to Lambda functions via Proxy Integrations.
 * **Asynchronous Processing:** Implementing the Storage-First pattern using direct SQS integrations.
+* **Fan-Out Webhooks:** Integrating directly with SNS to broadcast messages to multiple subscribers.
 * **API Security:** (Upcoming) Implementing API Keys and Usage Plans for throttling.
 * **Request Validation:** (Upcoming) Enforcing schema validation at the edge.
 * **Deployment Management:** (Upcoming) Managing Stages and Snapshots for CI/CD.
@@ -34,8 +35,9 @@ Based on AWS best practices (SAA-C03), these labs cover:
 > [!IMPORTANT]
 > **Cumulative Architecture:** These labs are designed as a cumulative scenario. You are building an evolving API infrastructure.
 >
-> **Session Persistence:** These labs rely on bash variables (like `$API_ID`, `$LAMBDA_ARN`, `$ACCOUNT_ID`, etc.). Run all commands in the same terminal session to maintain context.
+> **Session Persistence:** These labs rely on bash variables (like `$API_ID`, `$LAMBDA_ARN`, `$TOPIC_ARN`, etc.). Run all commands in the same terminal session to maintain context.
 
 ## 📚 Labs Index
 1. [Lab 1: Foundational API & Synchronous Lambda](./labs/lab1-api-lambda-sync/README.md)
 2. [Lab 2: Storage-First Pattern (Direct SQS Integration)](./labs/lab2-api-sqs-async/README.md)
+3. [Lab 3: Fan-Out Webhooks (Direct SNS Integration)](./labs/lab3-api-sns-fanout/README.md)
