@@ -43,6 +43,6 @@ Based on AWS best practices (SAA-C03), these labs cover:
 2. [Lab 2: Storage-First Pattern (Direct SQS Integration)](./labs/lab2-api-sqs-async/README.md)
 3. [Lab 3: Fan-Out Webhooks (Direct SNS Integration)](./labs/lab3-api-sns-fanout/README.md)
 4. [Lab 4: Event Routing (Direct EventBridge Integration)](./labs/lab4-api-eventbridge/README.md)
-5. [Lab 1: Payload Edge Validation](./labs/lab5-api-validation/README.md)
+5. [Lab 5: Payload Edge Validation](./labs/lab5-api-validation/README.md)
 6. [Lab 6: API Deployments & Stages](./labs/lab6-api-deployments/README.md)
 7. [Lab 7: Monetization & Security (API Keys & Throttling)](./labs/lab7-api-keys-throttling/README.md)
