@@ -5,15 +5,21 @@
 ```bash
 # 1. Create the target SQS Queue
 ACCOUNT_ID=$(awslocal sts get-caller-identity --query 'Account' --output text)
+ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 awslocal sqs create-queue --queue-name IngestionQueue
+aws sqs create-queue --queue-name IngestionQueue
 
 # 2. Create an IAM Role allowing API Gateway to write to SQS
 APIGW_ROLE=$(awslocal iam create-role --role-name ApiGatewayDirectRole --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"apigateway.amazonaws.com"},"Action":"sts:AssumeRole"}]}' --query 'Role.Arn' --output text)
+APIGW_ROLE=$(aws iam create-role --role-name ApiGatewayDirectRole --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"apigateway.amazonaws.com"},"Action":"sts:AssumeRole"}]}' --query 'Role.Arn' --output text)
 awslocal iam put-role-policy --role-name ApiGatewayDirectRole --policy-name SQSAccess --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"sqs:SendMessage","Resource":"*"}]}'
+aws iam put-role-policy --role-name ApiGatewayDirectRole --policy-name SQSAccess --policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":"sqs:SendMessage","Resource":"*"}]}'
 
 # 3. Create the /async resource and POST method
 ASYNC_ID=$(awslocal apigateway create-resource --rest-api-id $API_ID --parent-id $PARENT_ID --path-part "async" --query 'id' --output text)
+ASYNC_ID=$(aws apigateway create-resource --rest-api-id $API_ID --parent-id $PARENT_ID --path-part "async" --query 'id' --output text)
 awslocal apigateway put-method --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --authorization-type NONE
+aws apigateway put-method --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --authorization-type NONE
 
 # 4. Create the Direct AWS Integration with Velocity Template Language (VTL) mapping
 awslocal apigateway put-integration \
@@ -26,10 +32,22 @@ awslocal apigateway put-integration \
   --credentials $APIGW_ROLE \
   --request-parameters '{"integration.request.header.Content-Type": "'\''application/x-www-form-urlencoded'\''"}' \
   --request-templates '{"application/json": "Action=SendMessage&MessageBody=$util.urlEncode($input.body)"}'
+aws apigateway put-integration \
+  --rest-api-id $API_ID \
+  --resource-id $ASYNC_ID \
+  --http-method POST \
+  --type AWS \
+  --integration-http-method POST \
+  --uri "arn:aws:apigateway:us-east-1:sqs:path/${ACCOUNT_ID}/IngestionQueue" \
+  --credentials $APIGW_ROLE \
+  --request-parameters '{"integration.request.header.Content-Type": "'\''application/x-www-form-urlencoded'\''"}' \
+  --request-templates '{"application/json": "Action=SendMessage&MessageBody=$util.urlEncode($input.body)"}'
 
 # 5. Set the Method Response to 200 OK
 awslocal apigateway put-method-response --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --status-code 200
+aws apigateway put-method-response --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --status-code 200
 awslocal apigateway put-integration-response --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --status-code 200 --selection-pattern ""
+aws apigateway put-integration-response --rest-api-id $API_ID --resource-id $ASYNC_ID --http-method POST --status-code 200 --selection-pattern ""
 ```
 
 ## 🧠 Key Concepts & Importance
@@ -50,3 +68,45 @@ awslocal apigateway put-integration-response --rest-api-id $API_ID --resource-id
     - `--request-templates`: The VTL mapping used to transform the payload.
 - `apigateway put-method-response`: Defines the HTTP response configuration for the method.
 - `apigateway put-integration-response`: Maps the backend response to the method response.
+
+---
+
+💡 **Pro Tip: Using `aws` instead of `awslocal`**
+
+If you prefer using the standard `aws` CLI without the `awslocal` wrapper or repeating the `--endpoint-url` flag, you can configure a dedicated profile in your AWS config files.
+
+### 1. Configure your Profile
+Add the following to your `~/.aws/config` file:
+```ini
+[profile localstack]
+region = us-east-1
+output = json
+# This line redirects all commands for this profile to LocalStack
+endpoint_url = http://localhost:4566
+```
+
+Add matching dummy credentials to your `~/.aws/credentials` file:
+```ini
+[localstack]
+aws_access_key_id = test
+aws_secret_access_key = test
+```
+
+### 2. Use it in your Terminal
+You can now run commands in two ways:
+
+**Option A: Pass the profile flag**
+```bash
+aws iam create-user --user-name DevUser --profile localstack
+```
+
+**Option B: Set an environment variable (Recommended)**
+Set your profile once in your session, and all subsequent `aws` commands will automatically target LocalStack:
+```bash
+export AWS_PROFILE=localstack
+aws iam create-user --user-name DevUser
+```
+
+### Why this works
+- **Precedence**: The AWS CLI (v2) supports a global `endpoint_url` setting within a profile. When this is set, the CLI automatically redirects all API calls for that profile to your local container instead of the real AWS cloud.
+- **Convenience**: This allows you to use the standard documentation commands exactly as written, which is helpful if you are copy-pasting examples from AWS labs or tutorials.
