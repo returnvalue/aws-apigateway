@@ -1,7 +1,6 @@
 # Lab 2: Storage-First Pattern (Direct SQS Integration)
 
 **Goal:** Bypass Lambda entirely for high-volume ingestion. Configure API Gateway to transform an incoming HTTP POST request into an `Action=SendMessage` payload and drop it directly into an SQS Queue to absorb massive traffic spikes.
-
 ```bash
 # 1. Create the target SQS Queue
 ACCOUNT_ID=$(awslocal sts get-caller-identity --query 'Account' --output text)

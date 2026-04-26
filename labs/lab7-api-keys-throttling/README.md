@@ -1,7 +1,6 @@
 # Lab 7: Monetization & Security (API Keys & Throttling)
 
 **Goal:** Protect your `prod` stage from DDoS attacks or excessive use by creating a Usage Plan that throttles requests, and generate an API Key that users must pass in their headers to gain access.
-
 ```bash
 # 1. Create an API Key
 KEY_ID=$(awslocal apigateway create-api-key \

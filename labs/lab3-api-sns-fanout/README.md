@@ -1,7 +1,6 @@
 # Lab 3: Fan-Out Webhooks (Direct SNS Integration)
 
 **Goal:** Expose an endpoint that receives a payload and publishes it directly to an SNS Topic, which can then fan out to SMS, Email, or SQS subscribers.
-
 ```bash
 # 1. Create the target SNS Topic
 TOPIC_ARN=$(awslocal sns create-topic --name BroadcastTopic --query 'TopicArn' --output text)

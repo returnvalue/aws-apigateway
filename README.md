@@ -26,14 +26,12 @@ Based on AWS best practices (SAA-C03), these labs cover:
 1. Configure your LocalStack Auth Token in `.env`:
    ```bash
    echo "YOUR_TOKEN=your_auth_token_here" > .env
-   
-```
+   ```
 
 2. Start LocalStack Pro:
    ```bash
    docker-compose up -d
-   
-```
+   ```
 
 > [!IMPORTANT]
 > **Cumulative Architecture:** These labs are designed as a cumulative scenario. You are building an evolving API infrastructure.

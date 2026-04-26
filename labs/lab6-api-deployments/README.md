@@ -1,7 +1,6 @@
 # Lab 6: API Deployments & Stages
 
 **Goal:** API changes in AWS do not go live automatically. You must bundle your resources, methods, and integrations into a Deployment and attach it to a Stage (e.g., `dev`, `v1`, `prod`) to make them accessible via a URL.
-
 ```bash
 # 1. Deploy the current state of the API to a 'dev' stage
 awslocal apigateway create-deployment \

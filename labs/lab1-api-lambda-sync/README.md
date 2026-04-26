@@ -1,7 +1,6 @@
 # Lab 1: Foundational API & Synchronous Lambda
 
 **Goal:** Create the root REST API, deploy a simple Python Lambda function, and connect them using a Proxy Integration.
-
 ```bash
 # 1. Create a basic Lambda function
 cat <<EOF > api_handler.py

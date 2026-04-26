@@ -1,7 +1,6 @@
 # Lab 4: Event Routing (Direct EventBridge Integration)
 
 **Goal:** Expose an endpoint designed to ingest third-party webhooks (like Stripe or GitHub) directly onto an EventBridge Custom Bus, enabling event-driven routing across your organization.
-
 ```bash
 # 1. Create a Custom EventBus
 awslocal events create-event-bus --name WebhookBus

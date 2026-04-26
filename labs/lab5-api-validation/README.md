@@ -1,7 +1,6 @@
 # Lab 5: Payload Edge Validation
 
 **Goal:** Reduce compute costs and protect backend resources by rejecting malformed requests at the API Gateway level. We will enforce that the `/sync` endpoint must contain a specific query string parameter.
-
 ```bash
 # 1. Create a Request Validator for Query Strings
 VALIDATOR_ID=$(awslocal apigateway create-request-validator \
